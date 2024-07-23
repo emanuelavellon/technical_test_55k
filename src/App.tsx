@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useMemo } from "react"
 import { API_USERS } from "./Constants/Api";
 import { UsersTable } from "./Components/UsersTable";
 import { type Users} from './types.d';
+import './App.css'
 
 
 
@@ -79,11 +80,16 @@ function App() {
     <>
      
         <h1>Technical Interview</h1>
+        <p>This is a real technical test of an europen company,
+           This exercise was made after watching a video tutorial on the YouTube channel @midulive,
+           but I did it without consulting it, applying what I had learned.</p>
+        <hr />
+        <br />
         <header>
           <button onClick={handleShowColor}>Show Colors</button>
           <button onClick={handleSortByCountry}>Sort by Country</button>
           <button onClick={handleRestoreInitialUsers}>Restore Initial Users</button>
-          <input type="text" onChange={(evt)=>setFilterCountry(evt.target.value)} placeholder="Filter by Country...United States, Spain, Mexico" />
+          <input type="text" onChange={(evt)=>setFilterCountry(evt.target.value)} placeholder="Filter by Country..." />
         </header>
 
         <main>
