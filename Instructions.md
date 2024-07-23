@@ -12,7 +12,6 @@ Api: (https://randomuser.me/)
     meaning that all deleted rows will be recovered.
 -[x] Handle any potential errors that may occur.
 -[x] Implement a feature that allows the user to filter the data by country.
--[] Avoid sorting users again the data when the user is chainging filter
+-[x] Avoid sorting users again the data when the user is chainging filter
     by country.
--[] Sort by clicking in the column header.
--[] Provide a readme.md with instructions on how to run the application.
+-[x] Sort by clicking in the column header.

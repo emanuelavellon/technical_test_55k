@@ -1,5 +1,3 @@
-
-
 export interface Welcome {
     results: Users[];
     info:    Info;
@@ -83,6 +81,8 @@ export interface Picture {
     medium:    string;
     thumbnail: string;
 }
+
+
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
@@ -322,3 +322,5 @@ const typeMap: any = {
         { json: "thumbnail", js: "thumbnail", typ: "" },
     ], false),
 };
+
+
