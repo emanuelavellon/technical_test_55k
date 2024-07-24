@@ -4,27 +4,31 @@ import { UsersTable } from "./Components/UsersTable";
 import { type Users} from './types.d';
 import './App.css'
 
-
-
 function App() {
   const [users, setUsers]=useState<Array<Users>>([]);
   const [showColor, setShowColor] = useState(false);
   const [sorting, setSorting]=useState<SortBy>(SortBy.NONE);
   const [filterCountry, setFilterCountry]=useState<string | null>("");
   const initialUsers=useRef<Array<Users>>([])
+  const [loading, setLoading]=useState(true);
+  const [error, setError]=useState(false);
+  const [page, setPage]= useState(1);
  
   useEffect(()=>{
-    fetch(API_USERS)
+    fetch(`${API_USERS}&page=${page}`)
       .then(res=>res.json())
       .then(data=>{
         setUsers(data?.results);
         initialUsers.current=data?.results;
       })
       .catch(err=>{
-        console.log(err);
-      });
+        console.error(err);
+        setError(true);
+      }).finally(()=>{
+        setLoading(false);
+      })
 
-  }, []);
+  }, [page]);
 
   const filteredUsers= useMemo(()=>{
     return typeof filterCountry ==="string" && filterCountry.length>0
@@ -74,6 +78,10 @@ function App() {
 
     setSorting(sort);
   }
+
+  const handleRequestMore=()=>{
+    setPage(()=>page+1)
+  }
  
 
   return (
@@ -92,9 +100,25 @@ function App() {
           <input type="text" onChange={(evt)=>setFilterCountry(evt.target.value)} placeholder="Filter by Country..." />
         </header>
 
-        <main>
-          <UsersTable users={sortedUsers} showColor={showColor} deleteUser={handleDeleteUser} sortByColumnHeader={handleSortByColumnHeader}/>
-        </main>
+        {  
+          loading && <p>Loading...</p>      
+        }
+        {
+          error && <p>An error occurred during the request</p>
+        }
+        {
+          !loading && !error && users.length>0 && 
+            <main>
+              <UsersTable users={sortedUsers} showColor={showColor} deleteUser={handleDeleteUser} sortByColumnHeader={handleSortByColumnHeader}/>
+            <button onClick={handleRequestMore}>Load more</button>
+            </main>
+        }
+        {
+          !loading && users.length==0 && !error && <p>There are no persons to show</p>
+        }
+        
+
+        
     </>
   )
 
